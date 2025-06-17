@@ -10,6 +10,10 @@ from slidetd import ui
 from slidetd.slides import Slide
 from slidetd.analyzer import Analyzer
 
+try:
+    from icecream import ic
+except ImportError:
+    ic = lambda *args, **kwargs: None  # No-op if icecream is not installed  # noqa: E731
 
 class InfiniteCounter(object):
     """
@@ -45,13 +49,15 @@ class InfiniteCounter(object):
 
 class Detector(Analyzer):
 
-    def __init__(self, device, outpath=None, fileformat=".png"):
+    def __init__(self, device, outpath:str|None=None, fileformat:str=".png", framerate:int=1, threshold:float=0.90):
         cap = cv2.VideoCapture(sanitize_device(device))
-        self.sequence = timeline.Timeline(cap)
+        fps = int(cap.get(cv2.CAP_PROP_FPS))
+        self.downsample_factor = int(fps / framerate) if fps > 0 else 1
+        self.sequence = timeline.Timeline(cap, downsample_factor=self.downsample_factor)
         self.writer = mediaoutput.NullWriter()
         if outpath is not None:
             self.writer = mediaoutput.TimestampImageWriter(self.sequence.fps, outpath, fileformat)
-        self.comparator = imgcomparison.AbsDiffHistComparator(0.99)
+        self.comparator = imgcomparison.AbsDiffHistComparator(threshold)
 
     def detect_slides(self):
         progress = ui.ProgressController('Analyzing Video: ', self.sequence.len)
@@ -59,7 +65,14 @@ class Detector(Analyzer):
         frames = []
         name_getter = mediaoutput.TimestampImageWriter(self.sequence.fps)
         for i, frame in self.check_transition():
-            progress.update(i)
+            if frame is None:
+                ic(i)
+            else:
+                ic(i, "Frame detected")
+            try:
+                progress.update(i)
+            except ValueError as e:
+                pass
             if frame is not None:
                 frames.append(Slide(name_getter.next_name([i]), frame))
 
@@ -73,7 +86,7 @@ class Detector(Analyzer):
         self.writer.write(prev_frame, 0)
         yield 0, prev_frame
 
-        frame_counter = InfiniteCounter()
+        frame_counter = InfiniteCounter(step=self.downsample_factor)
         for frame_count in frame_counter.count():
 
             frame = self.sequence.next_frame()
@@ -109,16 +122,20 @@ def sanitize_device(device):
         return device
 
 
-def main():
+def main(filename: str | None = None):
     Parser = argparse.ArgumentParser(description="Slide Detector")
     Parser.add_argument("-d", "--device", help="video device number or path to video file")
     Parser.add_argument("-o", "--outpath", help="path to output video file", default="slides/", nargs='?')
     Parser.add_argument("-f", "--fileformat", help="file format of the output images e.g. '.jpg'",
-                        default=".jpg", nargs='?')
+                        default=".png", nargs='?')
+    Parser.add_argument("-r", "--framerate", help="frames per second to analyze", default=1, type=int, nargs='?')
+    Parser.add_argument("-t", "--threshold", help="comparison threshold", default=.99, type=float, nargs='?')
     Args = Parser.parse_args()
 
-    detector = Detector(Args.device, Args.outpath, Args.fileformat)
+    if filename is not None:
+        Args.device = filename
+    detector = Detector(Args.device, Args.outpath, Args.fileformat, Args.framerate, Args.threshold)
     detector.detect_slides()
 
 if __name__ == "__main__":
-    main()
+    main("/Users/febo/Library/CloudStorage/OneDrive-uniroma1.it/Documents/Didattica/Registrazioni 2024-25/MAADB/2025-02-27 08-15-59.mkv")
