@@ -2,13 +2,13 @@
 
 import argparse
 import cv2
-import imgcomparison
-import timeline
-import mediaoutput
-import ui
+from slidetd import imgcomparison
+from slidetd import timeline
+from slidetd import mediaoutput
+from slidetd import ui
 
-from slides import Slide
-from analyzer import Analyzer
+from slidetd.slides import Slide
+from slidetd.analyzer import Analyzer
 
 
 class InfiniteCounter(object):
@@ -109,7 +109,7 @@ def sanitize_device(device):
         return device
 
 
-if __name__ == "__main__":
+def main():
     Parser = argparse.ArgumentParser(description="Slide Detector")
     Parser.add_argument("-d", "--device", help="video device number or path to video file")
     Parser.add_argument("-o", "--outpath", help="path to output video file", default="slides/", nargs='?')
@@ -119,3 +119,6 @@ if __name__ == "__main__":
 
     detector = Detector(Args.device, Args.outpath, Args.fileformat)
     detector.detect_slides()
+
+if __name__ == "__main__":
+    main()

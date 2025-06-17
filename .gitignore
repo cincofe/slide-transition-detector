@@ -1,0 +1,15 @@
+.DS_Store
+
+.venv*/
+.*cache/
+dist/
+build/
+__pychache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+slides/
+unique/
+contents/
+

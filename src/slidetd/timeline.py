@@ -61,7 +61,7 @@ class Timeline(object):
         assert start >= 0
 
         result = []
-        for i in xrange(start, end, 1):
+        for i in range(start, end, 1):
             result.append(self.get_frame(i))
         return result
 

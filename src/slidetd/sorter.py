@@ -1,12 +1,12 @@
-import cv2
+# import cv2
 import os
-import mediaoutput
-import imgcomparison as ic
+from slidetd import mediaoutput
+from slidetd import imgcomparison as ic
 import argparse
-import sources
-import ui
-from slides import SlideDataHelper
-from analyzer import Analyzer
+from slidetd import sources
+from slidetd import ui
+from slidetd.slides import SlideDataHelper
+from slidetd.analyzer import Analyzer
 
 
 class SlideSorter(Analyzer):
@@ -90,8 +90,7 @@ class SlideSorter(Analyzer):
             yield slide
 
 
-if __name__ == '__main__':
-
+def main():
     Parser = argparse.ArgumentParser(description="Slide Sorter")
     Parser.add_argument("-d", "--inputslides", help="path of the sequentially sorted slides", default="slides/")
     Parser.add_argument("-o", "--outpath", help="path to output slides", default="unique/", nargs='?')
@@ -106,3 +105,6 @@ if __name__ == '__main__':
 
     sorter = SlideSorter(sources.ListSource(SlideDataHelper(Args.inputslides).get_slides()), Args.outpath, Args.timetable, Args.fileformat)
     sorter.sort()
+
+if __name__ == '__main__':
+    main()   

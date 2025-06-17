@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-import sys
+# import sys
 
 
 class Source(object):
@@ -10,7 +10,8 @@ class Source(object):
         pass
 
     def __len__(self):
-        return sys.maxint
+        # return sys.maxint
+        return 10_000_000_000  # Arbitrary large number for compatibility with Python 3.x
 
 class ListSource(Source):
     def __init__(self, list):

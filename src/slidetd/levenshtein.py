@@ -1,12 +1,12 @@
 import operator
-import pandas
+# import pandas
 
-from ui import ProgressController as pc
-from multiprocessing import Process
+from slidetd.ui import ProgressController as pc
+# from multiprocessing import Process
 
 
 def levenshtein(fst, snd, comp=operator.eq):
-    # type: (Sized, Sized, callable) -> int
+    ## type: (Sized, Sized, callable) -> int
     if min(len(fst), len(snd)) == 0:
         return max(len(fst), len(snd))
     

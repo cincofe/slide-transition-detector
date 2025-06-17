@@ -2,8 +2,8 @@ import subprocess
 import argparse
 import os
 
-from ui import ProgressController as pc
-from alignment import Aligner
+from slidetd.ui import ProgressController as pc
+from slidetd.alignment import Aligner
 
 
 png_prefix = 'slide'

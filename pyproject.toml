@@ -1,0 +1,31 @@
+[project]
+name = "slidetd"
+version = "0.1.0"
+description = "Slide Transition Detector - A tool for detecting and sorting slide transitions in video streams."
+authors = [
+    { name = "Rene Brandel", email = ""},  #  https://github.com/renebrandel
+]
+    
+readme = "README.md"
+requires-python = ">=3.5"
+dependencies = [
+    "opencv-python>=4.4.0.40",
+    "progressbar>=2.5",
+    "pyocr>=0.8.5",
+    "scipy>=1.4.1",
+]
+
+[project.scripts]
+slide-detect = "slidetd.detector:main"
+slide-sort = "slidetd.sorter:main"
+slide-extract = "slidetd.extractor:main"
+slide-align = "slidetd.alignment:main"
+slide-batch-execute = "slidetd.main:main"
+
+[build-system]
+requires = ["uv_build>=0.7.13,<0.8.0"]
+build-backend = "uv_build"
+
+# [build-system]
+# requires = ["hatchling"]
+# build-backend = "hatchling.build"

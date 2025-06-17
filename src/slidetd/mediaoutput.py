@@ -26,6 +26,8 @@ class MediaWriter(object):
 class NullWriter(MediaWriter):
     def write(self, content, *args):
         pass
+    def close(self):
+        pass
 
 
 class ImageWriter(MediaWriter):
@@ -76,7 +78,7 @@ class CustomImageWriter(ImageWriter):
         :param prefix: the file location and file name prefix
         :param file_format: the file format e.g. .jpg, .png
         """
-        super(CustomImageWriter, self).__init__(prefix + '%s', file_format)
+        super(CustomImageWriter, self).__init__((prefix or "") + '%s', file_format)
 
     def next_name(self, *args):
         return args[0]

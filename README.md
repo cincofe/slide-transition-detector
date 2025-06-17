@@ -2,7 +2,7 @@
 This Python script will analyze a video stream of a presentation and output the presentation slides. Furthermore, it will also use OCR to detect contents on the slide for further processing.
 This project can be roughly broken down into 3 consecutive pipeline processes.
 
-##Overview
+## Overview
 |**Process**|Slide Detection|Slide Grouping|Content Extraction|
 |---|:---:|:---:|:---:|
 |**Input**|Video of presentation|Slides in sequencial order|Slides in logical order w/ timestamp| 
@@ -16,6 +16,15 @@ This project can be roughly broken down into 3 consecutive pipeline processes.
 
 ## Requirements
 You will need to install OpenCV 3.1.0, OpenCV 3.1.0 Contributions, NumPy and ProgressBar library.
+
+> **Note:**  
+> In this fork, a `pyproject.toml` file is provided to manage Python dependencies. You can install the required python packages using `uv` (or `pip` or any other package manager that supports `pyproject.toml`).  
+> System dependencies such as Tesseract, ImageMagick, FFmpeg still need to be installed manually. On MacOS, you can use Homebrew to install these packages:
+>
+> ```zsh
+> brew install tesseract imagemagick ffmpeg
+> ```
+
 ### OpenCV
 
 Since the installation process of OpenCV is different from platform to platform, I would recommend checking out the [OpenCV homepage](http://opencv.org)

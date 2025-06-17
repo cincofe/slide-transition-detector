@@ -1,10 +1,10 @@
 import argparse
-import imgcomparison as ic
-import imgprocessor as ip
+from slidetd import imgcomparison as ic
+from  slidetd import imgprocessor as ip
 
-from levenshtein import ls
-from slides import SlideDataHelper
-from slides import numericalSort
+from slidetd.levenshtein import ls
+from slidetd.slides import SlideDataHelper
+from slidetd.slides import numericalSort
 
 class Evaluator(object):
     def __init__(self, source, reference):
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     evaluations = zip(sorted(Args.sourceslides, key=numericalSort), sorted(Args.reference, key=numericalSort))
     results = []
     for (source, ref) in evaluations:
-        print source, ref, ":"
+        print (source, ref, ":")
         evaluator = Evaluator(source, ref)
         results.append(evaluator.compare())
         

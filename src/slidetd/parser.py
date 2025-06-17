@@ -1,9 +1,9 @@
-import mediaoutput
+from slidetd import mediaoutput
 import argparse
 import cv2
 import os
 
-from slides import SlideDataHelper
+from slidetd.slides import SlideDataHelper
 
 
 class SlideParser(object):

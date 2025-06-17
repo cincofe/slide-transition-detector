@@ -20,7 +20,7 @@ class ImageProcessQueue(object):
 
     def __init__(self, processors=None):
         elem = []
-        if not processors is None:
+        if processors is not None:
             elem = processors
         self.queue = elem
 

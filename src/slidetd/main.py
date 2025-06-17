@@ -1,9 +1,9 @@
 import argparse
 import os.path as p
-import sources
-from detector import Detector
-from sorter import SlideSorter
-from extractor import ContentExtractor
+from slidetd import sources
+from slidetd.detector import Detector
+from slidetd.sorter import SlideSorter
+from slidetd.extractor import ContentExtractor
 
 
 def execute(inputfile, extractor_out, detector_out=None, sorter_out=None):
@@ -19,13 +19,17 @@ def batchExecute(inputfiles, extractor_out="contents/", detector_out="detected_s
         extractor = p.join(extractor_out, name) + p.sep
         sorter = p.join(sorter_out, name) + p.sep
         detector = p.join(detector_out, name) + p.sep
-        print "Analyzing " + name + ":"
+        print ("Analyzing " + name + ":")
         execute(file, extractor, detector, sorter)
-        print
+        print()
 
-if __name__ == "__main__":
-
+def main():
     Parser = argparse.ArgumentParser(description="Slide Detector")
     Parser.add_argument("files", help="video device number or path to video file", nargs='+')
     Args = Parser.parse_args()
     batchExecute(Args.files)
+
+
+if __name__ == "__main__":
+    main()
+    

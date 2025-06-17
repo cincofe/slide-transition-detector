@@ -1,18 +1,18 @@
 import pyocr
 import pyocr.builders
 import subprocess
-import mediaoutput
-import imgprocessor
-import ui
+from slidetd import mediaoutput
+from slidetd import imgprocessor
+import slidetd.ui as ui
 import argparse
-import sources
-import codecs
+from slidetd import sources
+# import codecs
 import tempfile
 import os
 
-from slides import SlideDataHelper
-from slides import convert_to_PIL
-from analyzer import Analyzer
+from slidetd.slides import SlideDataHelper
+from slidetd.slides import convert_to_PIL
+from slidetd.analyzer import Analyzer
 
 FNULL = open(os.devnull, 'w')
 
@@ -51,7 +51,8 @@ class ContentExtractor(Analyzer):
         subprocess.call(['tesseract', '-l', self.lang, image.name, os.path.join(self.output_dir, '%d' % count)], stdout=FNULL, stderr=subprocess.STDOUT)
         return slide
 
-if __name__ == "__main__":
+
+def main():
     Parser = argparse.ArgumentParser(description="Slide Sorter")
     Parser.add_argument("-d", "--inputslides", help="path of the sequentially sorted slides", default="unique/")
     Parser.add_argument("-o", "--outpath", help="path to output the content of the slides", default="contents/", nargs='?')
@@ -59,3 +60,6 @@ if __name__ == "__main__":
     Args = Parser.parse_args()
     ContentExtractor(sources.ListSource(SlideDataHelper(Args.inputslides).get_slides()), Args.outpath, lang=Args.lang).analyze()
 
+
+if __name__ == "__main__":
+    main()
