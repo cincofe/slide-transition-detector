@@ -12,4 +12,5 @@ __pychache__/
 slides/
 unique/
 contents/
-
+tests/assets/
+!tests/assets/.gitkeep
