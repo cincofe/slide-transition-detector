@@ -1,6 +1,6 @@
 [project]
 name = "slidetd"
-version = "0.1.0"
+version = "0.1.1"
 description = "Slide Transition Detector - A tool for detecting and sorting slide transitions in video streams."
 authors = [
     { name = "Rene Brandel", email = ""},  #  https://github.com/renebrandel
@@ -30,6 +30,7 @@ build-backend = "uv_build"
 dev = [
     "icecream>=2.1.3",
     "pytest>=6.1.2",
+    "pytest-cov>=2.12.1",
 ]
 
 # [build-system]

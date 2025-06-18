@@ -98,7 +98,7 @@ class Detector(Analyzer):
         self.writer.write(prev_frame, START_FRAME)
         yield START_FRAME, prev_frame
 
-        ic("Starting external loop")
+        # ic("Starting external loop")
         while True:
             pos, frame = self.sequence.next_frame()
 
@@ -107,7 +107,7 @@ class Detector(Analyzer):
                 break
 
             if not self.comparator.are_same(prev_frame, frame):
-                ic("Frames are different, entering inner loop", pos)
+                # ic("Frames are different, entering inner loop", pos)
 
                 # I believe that the following loop that checks for similar frames
                 # inside a smooth transition. If this is confirmed, the code 

@@ -95,7 +95,7 @@ def main():
     Parser.add_argument("-d", "--inputslides", help="path of the sequentially sorted slides", default="slides/")
     Parser.add_argument("-o", "--outpath", help="path to output slides", default="unique/", nargs='?')
     Parser.add_argument("-f", "--fileformat", help="file format of the output images e.g. '.jpg'",
-                        default=".jpg", nargs='?')
+                        default=".png", nargs='?')
     Parser.add_argument("-t", "--timetable",
                         help="path where the timetable should be written (default is the outpath+'timetable.txt')",
                         nargs='?', default=None)
